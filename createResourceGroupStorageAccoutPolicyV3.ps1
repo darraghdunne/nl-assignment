@@ -104,7 +104,28 @@ if ($rp_required -eq "y") {
 
     # Get the path to allowed resource types .csv and check it exists
     $resources_Path = Read-Host "Enter the full path to the file with allowed resource types"
-    $path = Test-Path $resources
+    $path = Test-Path $resources_Path
+    if ($path -eq $true){
+        Write-Host "The file is there"
+    } else {
+        Write-Host "Cannot find the file, double check it exists and try again"
+        exit 1
+    }
+    $path = $null
+
+    # Get the path to resource policy .json and check it exists
+    $resourcesPolicy_Path = Read-Host "Enter the full path to the file with resource POLICY .json file"
+    $path = Test-Path $resourcesPolicy_Path
+    if ($path -eq $true){
+        Write-Host "The file is there"
+    } else {
+        Write-Host "Cannot find the file, double check it exists and try again"
+    }
+    $path = $null
+
+    # Get the path to resource parameter .json and check it exists
+    $resourcesParam_Path = Read-Host "Enter the full path to the file with resource PARAMETER .json file"
+    $path = Test-Path $resourcesParam_Path
     if ($path -eq $true){
         Write-Host "The file is there"
     } else {
@@ -121,7 +142,7 @@ if ($rp_required -eq "y") {
     $type = $resources.Allowed
 
     # Define policy
-    $definition = New-AzureRmPolicyDefinition -Name "allowed-resourcetypes" -DisplayName "Allowed resource types" -description "This policy enables you to specify the resource types that your organization can deploy." -Policy 'C:\$Darragh\_Work\Netherlands\Interviews\Assignments\Sentia\resourceTypes.json' -Parameter 'C:\$Darragh\_Work\Netherlands\Interviews\Assignments\Sentia\listOfResourceTypesAllowed.json' -Mode All
+    $definition = New-AzureRmPolicyDefinition -Name "allowed-resourcetypes" -DisplayName "Allowed resource types" -description "This policy enables you to specify the resource types that your organization can deploy." -Policy $resourcesPolicy_Path -Parameter $resourcesParam_Path -Mode All
     $definition
 
     # Apply policy passing in resource group, subscription ID, resource types
