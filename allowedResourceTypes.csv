@@ -1,0 +1,3 @@
+Allowed
+ Microsoft.Compute/disks
+ Microsoft.Storage/storageAccounts
