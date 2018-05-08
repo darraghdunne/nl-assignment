@@ -1,5 +1,5 @@
 ﻿# Connect to Azure
-#Login-AzureRmAccount
+Login-AzureRmAccount
 
 # Check if resource group is required
 $rg_required = Read-Host "Is a new resource group required?(y/n)"
